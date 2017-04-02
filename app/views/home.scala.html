@@ -1,0 +1,13 @@
+@import helper._
+
+@(tableData: play.data.Form[TableDetails])
+@main("Home Page"){
+
+
+  @helper.form(action = routes.HomeController.getData()) {
+
+    @helper.inputText(tableData("databaseName"), '_label->"Database Name :")
+    @helper.inputText(tableData("tableName"), '_labe->"Table Name :")
+    <input type="submit" value="Get Data" class="btn btn-primary" value="submit">
+  }
+}
