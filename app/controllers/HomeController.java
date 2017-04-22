@@ -1,8 +1,10 @@
 package controllers;
 
-import com.google.inject.Inject;
-import models.TableDetails;
+import javax.inject.Inject;
+
+import models.DataSourceDetails;
 import play.data.Form;
+import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.PrestoService;
@@ -13,8 +15,13 @@ import views.html.home;
  * to the application's home page.
  */
 public class HomeController extends Controller {
-  Form<TableDetails> formData = Form.form(TableDetails.class);
-  @Inject() PrestoService prestoService;
+  private Form<DataSourceDetails> formData;
+  private final PrestoService prestoService;
+
+  @Inject public HomeController(PrestoService prestoService, FormFactory formFactory) {
+    this.prestoService = prestoService;
+    this.formData = formFactory.form(DataSourceDetails.class);
+  }
 
   /**
    * An action that renders an HTML page with a welcome message.
@@ -27,13 +34,13 @@ public class HomeController extends Controller {
   }
 
   public Result getData() {
-    Form<TableDetails> formData = Form.form(TableDetails.class).bindFromRequest();
+    Form<DataSourceDetails> formData = Form.form(DataSourceDetails.class).bindFromRequest();
     if (formData.hasErrors()) {
       return badRequest();
     } else {
-      TableDetails tableDetails = formData.get();
-      String result =
-          prestoService.getData(tableDetails.getDatabaseName(), tableDetails.getTableName());
+      DataSourceDetails dataSourceDetails = formData.get();
+      String result = prestoService.getData(dataSourceDetails.getCatalogName().toLowerCase(), dataSourceDetails.getDatabaseName().toLowerCase(),
+          dataSourceDetails.getTableName().toLowerCase());
       return ok(result);
     }
   }

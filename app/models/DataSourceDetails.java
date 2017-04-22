@@ -21,24 +21,32 @@ package models;
 /**
  * Created by knoldus on 1/4/17.
  */
-public class TableDetails {
+public class DataSourceDetails {
+  String catalogName;
+  String databaseName;
+  String tableName;
 
-    String databaseName;
-    String tableName;
+  public String getCatalogName() {
+    return catalogName;
+  }
 
-    public String getDatabaseName() {
-        return this.databaseName;
-    }
+  public String getDatabaseName() {
+    return this.databaseName;
+  }
 
-    public String getTableName() {
-        return tableName;
-    }
+  public String getTableName() {
+    return tableName;
+  }
 
-    public void setDatabaseName(String databaseName) {
-        this.databaseName = databaseName;
-    }
+  public void setCatalogName(String catalogName) {
+    this.catalogName = catalogName;
+  }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
+  public void setDatabaseName(String databaseName) {
+    this.databaseName = databaseName;
+  }
+
+  public void setTableName(String tableName) {
+    this.tableName = tableName;
+  }
 }
